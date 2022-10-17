@@ -2,7 +2,46 @@ import { question } from 'readline-sync'
 
 function ATM()
 {
-    const [ AccountNumber, AccountPin ] = User();
+    const [ AccountBalance, AccountNumber, UserName, AccountType, AccountPin ] = User()
+
+    //ATM Functions
+    function Details(){
+        console.log('Account Number:', AccountNumber);
+        console.log('Account Title:', UserName);
+        console.log('Account Type:', AccountType);
+    }
+
+    function CheckBalance(){
+        console.log('Current Balance:', AccountBalance);
+    }
+
+    function MoneyTransfer(){
+        const [ AccountBalance ] = User()
+        console.log("Account Balance: ",AccountBalance)
+        const TransferAccountNumber = question("Enter Account Number: ")
+        const TransferMoney = question("Enter Transfer Money: ")
+        const validInput :boolean= isNumber(TransferAccountNumber) && isNumber(TransferMoney)
+        if(validInput){
+            const Amnt2 = parseInt(TransferMoney)
+            const RemainingAccountBalance = AccountBalance - Amnt2
+            console.log(RemainingAccountBalance)
+        }
+
+    }
+
+    function Withdrwal(){
+        const WithdrwalAmount :string = question('Enter Amount: ')
+        const validInput :boolean= isNumber(WithdrwalAmount)
+        if(validInput){
+            const Amnt = parseInt(WithdrwalAmount)
+            const CurrentBalance = AccountBalance - Amnt
+            console.log(CurrentBalance)
+        }
+        else{
+            console.log('Invalid')
+        }
+    }
+
     console.log('Account Number:',AccountNumber)
     console.log('Account Password:',AccountPin)
 
@@ -10,15 +49,51 @@ function ATM()
     const AccntPswrd :string = question("Enter PIN: ");
 
     const validInput :boolean= isNumber(AccntNumbr) && isNumber(AccntPswrd);
-    
-    if(validInput)
+
+    function Machine(){
+        if(validInput)
     {
         const CardNumber: number = parseInt(AccntNumbr);
         const CardPin: number = parseInt(AccntPswrd);
         
         if(CardNumber === AccountNumber){
             if(CardPin === AccountPin){
-                console.log('Successfull')
+                console.log("===============================")
+                console.log('Press 1 for Details');
+                console.log('Press 2 for Withdrwal Amount');
+                console.log('Press 3 for Transfer Money');
+                console.log('Press 4 for Check Balance')
+                console.log('Press Ctrl + C to break')
+                console.log("===============================")
+                const Choice = question("Enter: ")
+
+                const validInput :boolean= isNumber(Choice)
+                
+                if(validInput){
+                    const Entered_Choice = parseInt(Choice)
+
+                    if (Entered_Choice === 1 ){
+                        Details()
+                        Machine()
+                    }
+                    if (Entered_Choice === 2 ){
+                        Withdrwal()
+                        Machine()
+                    }
+                    if (Entered_Choice === 3 ){
+                        MoneyTransfer()
+                        Machine()
+                    }
+                    if (Entered_Choice === 4 ){
+                        CheckBalance()
+                        Machine()
+                    }
+                    else{
+                        console.log('Wrong Choice')
+                    }
+                   
+                }
+
             }
             else{
                 console.log('Invalid Card Pin')
@@ -32,6 +107,8 @@ function ATM()
     else{
         console.log('Invalid Input')
     }
+    }
+    Machine()
 }
 
 function User() 
@@ -50,13 +127,33 @@ function ATM_Functions()
    const [ AccountBalance, AccountNumber, UserName, AccountType, AccountPin ] = User() 
 
     function Details(){
+        console.log("===============================")
         console.log('Account Number:', AccountNumber);
         console.log('Account Title:', UserName);
         console.log('Account Type:', AccountType);
+        console.log("===============================")
     }
 
     function CheckBalance(){
+        console.log("===============================")
         console.log('Current Balance:', AccountBalance);
+        console.log("===============================")
+    }
+
+    function MoneyTransfer(){
+        const [ AccountBalance ] = User()
+        console.log("===============================")
+        console.log("Account Balance: ",AccountBalance)
+        const TransferAccountNumber = question("Enter Account Number: ")
+        const TransferMoney = question("Enter Transfer Money: ")
+        const validInput :boolean= isNumber(TransferAccountNumber) && isNumber(TransferMoney)
+        if(validInput){
+            const Amnt2 = parseInt(TransferMoney)
+            const RemainingAccountBalance = AccountBalance - Amnt2
+            console.log("Remaining Amount",RemainingAccountBalance)
+            console.log("===============================")
+        }
+
     }
 
     function Withdrwal(){
@@ -65,16 +162,15 @@ function ATM_Functions()
         if(validInput){
             const Amnt = parseInt(WithdrwalAmount)
             const CurrentBalance = AccountBalance - Amnt
+            console.log("===============================")
             console.log(CurrentBalance)
+            console.log("===============================")
         }
         else{
             console.log('Invalid')
         }
     }
 
-    Details()
-    CheckBalance()
-    Withdrwal()
 }
 
 function AccountNumberGenerator()
@@ -100,6 +196,6 @@ function isNumber(str: string) :boolean
 }
 
 
-// ATM()
-ATM_Functions()
+ATM()
+// ATM_Functions()
 
